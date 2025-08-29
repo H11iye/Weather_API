@@ -1,13 +1,19 @@
 from flask import Flask, jsonify, request
 import requests, os # Import os to access environment variables for API key management 
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 API_KEY = os.getenv('WEATHER_API_KEY')  # Fetch the API key from environment variables
+if not API_KEY:
+    raise ValueError("No API key found. Please set the WEATHER_API_KEY environment variable.")
+
+
 BASE_URL = "http://api.openweathermap.org/data/2.5/weather" 
 
 @app.route('/weather', methods=['GET'])
 def get_weather():
-    city = request.args.get('city')
+    city = request.args.get('city', 'Paris')
     if not city:
         return jsonify({"error": "City parameter is required"}), 400
 
@@ -16,10 +22,13 @@ def get_weather():
         'appid': API_KEY,
         'units': 'metric'
     }
-    response = requests.get(BASE_URL, params=params)
+
+    try:
+        response = requests.get(BASE_URL, params=params, timeout=5)
+        response.raise_for_status()
+    except requests.RequestException as e:
+        return jsonify({"error": str(e)}), 500
     
-    if response.status_code != 200:
-        return jsonify({"error": "City not found or API error"}), response.status_code
 
     data = response.json()
     weather_info = {
