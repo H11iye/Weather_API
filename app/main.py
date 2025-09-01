@@ -8,6 +8,8 @@ API_KEY = os.getenv('WEATHER_API_KEY')  # Fetch the API key from environment var
 if not API_KEY:
     raise ValueError("No API key found. Please set the WEATHER_API_KEY environment variable.")
 
+TIMEOUT = float(os.getenv('WEATHER_API_TIMEOUT', '5'))  # Fetch timeout from env, default to 5 seconds
+
 
 BASE_URL = "http://api.openweathermap.org/data/2.5/weather" 
 
@@ -24,10 +26,11 @@ def get_weather():
     }
 
     try:
-        response = requests.get(BASE_URL, params=params, timeout=5)
+        response = requests.get(BASE_URL, params=params, timeout=TIMEOUT)
         response.raise_for_status()
     except requests.RequestException as e:
-        return jsonify({"error": str(e)}), 500
+        app.logger.error(f"Weather API request failed: {e}")
+        return jsonify({"error": "Failed to fetch weather data. Please try again later."}), 500
     
 
     data = response.json()
