@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  weather_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - WEATHER_API_KEY=${WEATHER_API_KEY}
+    ports:
+      - "8080:5500"
+    
