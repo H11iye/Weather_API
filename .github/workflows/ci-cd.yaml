@@ -39,8 +39,10 @@ jobs:
         pip install pytest
 
     - name: Run tests
+    # Ensure the current directory is in PYTHONPATH
       run: |
-        pytest app/tests/
+        PYTHONPATH=$(pwd) pytest -q
+        
 
 #------------------------ Deploy to GCP App Engine------------------------
     - name: Set up Google Cloud SDK
