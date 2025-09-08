@@ -47,6 +47,7 @@ jobs:
         
 
 #------------------------ Deploy SECTION to GCP App Engine------------------------
+    # ----------------- Create the app region if not already created  with this command "gcloud app create --project PROJECT_ID --region EXAMPLE_REGION"-----------------
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v2
       with:
