@@ -53,7 +53,7 @@ jobs:
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         service_account_key: ${{ secrets.GCP_SA_KEY }}
         export_default_credentials: true
-    
+    # Inject the secretes before the deploy step
     - name: Inject WEATHER_API_KEY into app.yaml
       run: |
         sed -i "s|\${WEATHER_API_KEY}|${{ secrets.WEATHER_API_KEY }}|g" app.yaml
