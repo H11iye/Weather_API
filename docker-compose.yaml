@@ -1,4 +1,4 @@
-version: "3.8"
+# version: "3.8"
 
 services:
   weather_api:
@@ -12,5 +12,5 @@ services:
     image: weather_api:1.0
     container_name: weather_api_container
     ports:
-      - "8080:5500"
+      - "8080:8080"
     

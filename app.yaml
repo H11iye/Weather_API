@@ -8,3 +8,5 @@ resources:
 
 env_variables:
   WEATHER_API_KEY: ${WEATHER_API_KEY}  # Placeholder for the API key, to be replaced during deployment
+
+entrypoint: gunicorn --bind :$PORT main:app #Use Gunicorn to run the app

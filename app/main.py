@@ -41,4 +41,6 @@ def get_weather():
     }
     return jsonify(weather_info)
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5500)
+    import os
+    port = int(os.environ.get("PORT", 8080)) #Default to 8080 of PORT is not set 
+    app.run(host='0.0.0.0', port=port)

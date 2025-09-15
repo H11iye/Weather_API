@@ -1,0 +1,6 @@
+# .gcloudignore
+.gcloudignore
+.gitignore
+.env
+.venv/
+docker-compose.yaml
